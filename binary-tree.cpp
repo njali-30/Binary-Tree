@@ -4,8 +4,9 @@ using namespace std;
 class Student {
     int roll_no, cgpa;
     string name, address, dob;
-    Student *LC, *RC;
+
 public:
+    Student *LC, *RC;
     void create();
     void insert(Student *root, Student *next);
     void inorderR(Student *root);
@@ -14,7 +15,6 @@ public:
     void displayInternalNodes(Student *root);
     int calculateHeight(Student *root);
     Student() : LC(NULL), RC(NULL) {}
-    friend class StudentTree;
 } *root = NULL, *S[100];
 
 void Student::create() {
@@ -89,7 +89,10 @@ void Student::displayLeafNodes(Student *root) {
 
 void Student::displayInternalNodes(Student *root) {
     if (root == NULL || (root->LC == NULL && root->RC == NULL)) return;
-    cout << "\n" << root->roll_no << " " << root->name;
+
+    if ((root->LC != NULL || root->RC != NULL) && root != ::root) { 
+        cout << "\n" << root->roll_no << " " << root->name;
+    }
     displayInternalNodes(root->LC);
     displayInternalNodes(root->RC);
 }
@@ -140,11 +143,11 @@ int main() {
                 }
                 break;
             case 5:
-                if (root != NULL) {
+                if (root != NULL && (root->LC != NULL || root->RC != NULL)) {
                     cout << "\nInternal Nodes:";
                     root->displayInternalNodes(root);
                 } else {
-                    cout << "Tree is empty!";
+                    cout << "No internal nodes!";
                 }
                 break;
             case 6:

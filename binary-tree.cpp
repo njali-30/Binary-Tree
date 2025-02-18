@@ -14,7 +14,7 @@ public:
     void displayLeafNodes(Student *root);
     void displayInternalNodes(Student *root);
     int calculateHeight(Student *root);
-    Student() : LC(NULL), RC(NULL) {}
+    Student() : LC(NULL), RC(NULL) {}  //constructor initialization list
 } *root = NULL, *S[100];
 
 void Student::create() {
@@ -30,7 +30,7 @@ void Student::create() {
         if (ch == 1) {
             Student *next = new Student;
             cout << "Enter Roll number, Name, DOB, Address, CGPA: ";
-            cin >> next->roll_no >> next->name >> next->dob >> next->address >> next->cgpa;
+            cin  >> next->roll_no >> next->name >> next->dob >> next->address >> next->cgpa;
             next->LC = next->RC = NULL;
             insert(root, next);
         }
@@ -63,20 +63,28 @@ void Student::inorderR(Student *root) {
 }
 
 void Student::inorderNR(Student *root) {
-    if (root == NULL) return;
-    int top = -1;
-    Student *temp = root;
-    
-    while (temp != NULL || top != -1) {
+    if (root == NULL) return;  
+
+    int top = -1;              
+    Student *temp = root;      
+
+    while (temp != NULL || top != -1) {  
+        // Step 1: Traverse left subtree and push nodes onto stack
         while (temp != NULL) {
-            S[++top] = temp;
-            temp = temp->LC;
+            S[++top] = temp;  
+            temp = temp->LC;  
         }
-        temp = S[top--];
-        cout << "\n" << temp->roll_no << " " << temp->name << " " << temp->dob << " " << temp->address << " " << temp->cgpa;
+
+        // Step 2: Pop and process node
+        temp = S[top--];  
+        cout << "\n" << temp->roll_no << " " << temp->name << " " 
+             << temp->dob << " " << temp->address << " " << temp->cgpa;
+
+        // Step 3: Move to right subtree
         temp = temp->RC;
     }
 }
+
 
 void Student::displayLeafNodes(Student *root) {
     if (root == NULL) return;
